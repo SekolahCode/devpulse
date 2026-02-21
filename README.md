@@ -1,48 +1,41 @@
-# ⚡ DevPulse
+# DevPulse
 
 Self-hosted error tracking and performance monitoring for developers.
 Like Sentry, but free and runs locally via Docker.
 
 ## Quick Start
 
-````bash
+```bash
 docker compose up -d
-Open http://localhost:8000
+```
 
-SDKs
-Package	Install
-Laravel	composer require devpulse/laravel
-WordPress	Drop plugin into wp-content/plugins/
-Browser	<script src="http://localhost:8000/devpulse.js">
-Repos
-server — Rust + Axum ingestion server
+Open [http://localhost:8000](http://localhost:8000)
 
-sdks/php-core — PHP core SDK
+## SDKs
 
-sdks/laravel — Laravel package
+| Package   | Install                                            |
+| --------- | -------------------------------------------------- |
+| Laravel   | `composer require devpulse/laravel`                |
+| WordPress | Drop plugin into `wp-content/plugins/`             |
+| Browser   | `<script src="http://localhost:8000/devpulse.js">` |
 
-sdks/wordpress — WordPress plugin
+## Repos
 
-sdks/browser — Browser JS SDK
+- [server/](server/) — Rust + Axum ingestion server
+- [sdks/php-core/](sdks/php-core/) — PHP core SDK
+- [sdks/laravel/](sdks/laravel/) — Laravel package
+- [sdks/wordpress/](sdks/wordpress/) — WordPress plugin
+- [sdks/browser/](sdks/browser/) — Browser JS SDK
 
-text
-
-***
-
-## Step 5 — First Commit and Push Main Repo
+## Clone (Including Submodules)
 
 ```bash
-# Create main repo on GitHub first: yourname/devpulse
-git add .
-git commit -m "chore: init monorepo with submodules"
-git remote add origin git@github.com:yourname/devpulse.git
-git push -u origin main
-Step 6 — How to Clone Later (Anyone)
-bash
-# Clone everything including all submodules in one command
-git clone --recurse-submodules git@github.com:yourname/devpulse.git
-Daily Workflow After This
-bash
+git clone --recurse-submodules git@github.com:SekolahCode/devpulse.git
+```
+
+## Daily Workflow
+
+```bash
 # Work in a submodule (e.g. server)
 cd server
 git add .
@@ -54,9 +47,9 @@ cd ..
 git add server
 git commit -m "chore: update server submodule"
 git push origin main
-Update All Submodules at Once
-bash
+```
+
+```bash
 # Pull latest changes from all submodules
 git submodule update --remote --merge
-What's your GitHub username? I can give you the exact commands with your real repo URLs.
-````
+```
