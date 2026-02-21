@@ -1,0 +1,15 @@
+[submodule "server"]
+	path = server
+	url = git@github.com:SekolahCode/devpulse-server.git
+[submodule "sdks/php-core"]
+	path = sdks/php-core
+	url = git@github.com:SekolahCode/devpulse-core.git
+[submodule "sdks/laravel"]
+	path = sdks/laravel
+	url = git@github.com:SekolahCode/devpulse-laravel.git
+[submodule "sdks/wordpress"]
+	path = sdks/wordpress
+	url = git@github.com:SekolahCode/devpulse-wp.git
+[submodule "sdks/browser"]
+	path = sdks/browser
+	url = git@github.com:SekolahCode/devpulse-browser.git
