@@ -4,6 +4,7 @@
 [submodule "sdks/php-core"]
 	path = sdks/php-core
 	url = git@github.com:SekolahCode/devpulse-core.git
+	ignore = dirty
 [submodule "sdks/laravel"]
 	path = sdks/laravel
 	url = git@github.com:SekolahCode/devpulse-laravel.git
