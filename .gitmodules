@@ -10,6 +10,7 @@
 [submodule "sdks/wordpress"]
 	path = sdks/wordpress
 	url = git@github.com:SekolahCode/devpulse-wp.git
+	ignore = untracked
 [submodule "sdks/browser"]
 	path = sdks/browser
 	url = git@github.com:SekolahCode/devpulse-browser.git
