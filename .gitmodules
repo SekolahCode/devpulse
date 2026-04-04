@@ -15,3 +15,6 @@
 [submodule "sdks/browser"]
 	path = sdks/browser
 	url = git@github.com:SekolahCode/devpulse-browser.git
+[submodule "sdks/node"]
+	path = sdks/node
+	url = git@github.com:SekolahCode/devpulse-node.git
