@@ -1,0 +1,32 @@
+{
+  "name": "@sekolahcode/devpulse-node",
+  "version": "1.0.0",
+  "description": "DevPulse Node.js SDK — server-side error tracking",
+  "license": "MIT",
+  "keywords": [
+    "error-tracking",
+    "monitoring",
+    "node",
+    "sdk",
+    "express",
+    "fastify"
+  ],
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "default": "./src/index.js"
+    }
+  },
+  "files": [
+    "src"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "node --test src/*.test.js"
+  },
+  "devDependencies": {}
+}

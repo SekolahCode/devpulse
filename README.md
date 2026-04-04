@@ -3,6 +3,10 @@
 Self-hosted error tracking and performance monitoring for developers.
 Like Sentry, but free and runs locally via Docker.
 
+> **v1.0 — breaking change:** The ingest API key moved from the URL to an
+> `X-API-Key` header. Upgrade all SDKs together with the server.
+> See [CHANGELOG.md](CHANGELOG.md) for the full upgrade guide.
+
 ## Quick Start
 
 ```bash
@@ -17,7 +21,8 @@ Open [http://localhost:8000](http://localhost:8000)
 | --------- | -------------------------------------------------- |
 | Laravel   | `composer require devpulse/laravel`                |
 | WordPress | Drop plugin into `wp-content/plugins/`             |
-| Browser   | `<script src="http://localhost:8000/devpulse.js">` |
+| Browser   | `npm install @sekolahcode/devpulse-browser`        |
+| Node.js   | `npm install @sekolahcode/devpulse-node`           |
 
 ## Repos
 
@@ -26,6 +31,7 @@ Open [http://localhost:8000](http://localhost:8000)
 - [sdks/laravel/](sdks/laravel/) — Laravel package
 - [sdks/wordpress/](sdks/wordpress/) — WordPress plugin
 - [sdks/browser/](sdks/browser/) — Browser JS SDK
+- [sdks/node/](sdks/node/) — Node.js SDK
 
 ## Clone (Including Submodules)
 
