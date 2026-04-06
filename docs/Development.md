@@ -9,14 +9,15 @@ devpulse/
 ├── server/           # Rust API server (Axum)
 │   ├── src/          # Rust source code
 │   ├── dashboard/    # Vue 3 dashboard
-│   ├── migrations/  # Database migrations
-│   └── docker/      # Docker initialization scripts
+│   ├── migrations/   # Database migrations
+│   └── docker/       # Docker initialization scripts
 ├── sdks/
-│   ├── browser/     # JavaScript browser SDK
-│   ├── laravel/     # Laravel package
-│   ├── php-core/    # PHP core SDK
-│   └── wordpress/   # WordPress plugin
-├── docs/            # Documentation
+│   ├── browser/      # JavaScript browser SDK
+│   ├── node/         # Node.js SDK
+│   ├── laravel/      # Laravel package
+│   ├── php-core/     # PHP core SDK
+│   └── wordpress/    # WordPress plugin
+├── docs/             # Documentation
 └── LICENSE
 ```
 
@@ -52,9 +53,12 @@ docker compose -f docker-compose.dev.yaml up -d
 
 This starts:
 
-- PostgreSQL on port 5432
+- PostgreSQL on port **5433** (host) → 5432 (container)
 - Redis on port 6379
-- Mailpit (email testing) on port 1025
+- Mailpit SMTP on port 1025, web UI on http://localhost:8025
+
+Set `SMTP_HOST=localhost SMTP_PORT=1025` in your `.env` to test alert emails locally.
+Docker Compose reads `.env` automatically — copy `.env.example` and adjust values.
 
 ### Running the Server
 
@@ -116,9 +120,24 @@ vendor/bin/phpunit
 vendor/bin/phpstan analyse
 ```
 
+### Node.js SDK
+
+```bash
+cd sdks/node
+npm install
+npm test
+```
+
 ### WordPress Plugin
 
-The WordPress plugin is in `sdks/wordpress/`. To test:
+```bash
+cd sdks/wordpress
+composer install
+composer analyse   # PHPStan static analysis
+composer test      # PHPUnit unit tests
+```
+
+To test the plugin end-to-end:
 
 1. Copy to a WordPress installation's `wp-content/plugins/`
 2. Activate and configure
@@ -209,8 +228,7 @@ vendor/bin/phpunit
 4. For submodules, after merging:
    ```bash
    cd server
-   git checkout main
-   git pull
+   git pull origin main
    cd ..
    git add server
    git commit -m "chore: update server submodule"

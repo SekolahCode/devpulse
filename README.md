@@ -37,12 +37,12 @@ Open [http://localhost:8000](http://localhost:8000)
 
 | Component | Version | Breaking changes from previous |
 |---|---|---|
-| Server | 1.0.0 | API key moved from URL to `X-API-Key` header |
-| Browser SDK | 1.0.0 | DSN transport rewritten — update alongside server |
-| Node SDK | 1.0.0 | Initial release |
-| PHP core | 2.0.0 | DSN transport rewritten |
-| Laravel SDK | 2.0.0 | DSN transport rewritten |
-| WordPress plugin | 2.0.0 | DSN transport rewritten, IP spoofing fixed |
+| Server | 1.0.1 | API key moved from URL to `X-API-Key` header (v1.0.0) |
+| Browser SDK | 1.0.1 | DSN transport rewritten — update alongside server (v1.0.0) |
+| Node SDK | 1.0.2 | Initial release (v1.0.0) |
+| PHP core | 2.0.1 | DSN transport rewritten (v2.0.0) |
+| Laravel SDK | 2.0.1 | DSN transport rewritten (v2.0.0) |
+| WordPress plugin | 2.0.1 | DSN transport rewritten, IP spoofing fixed (v2.0.0) |
 
 See [CHANGELOG.md](CHANGELOG.md) for the full history and upgrade guide.
 
@@ -59,7 +59,7 @@ git clone --recurse-submodules git@github.com:SekolahCode/devpulse.git
 cd server
 git add .
 git commit -m "fix: ..."
-git push origin master   # server uses master; SDKs use main
+git push origin main     # all repos use main
 
 # Update the monorepo pointer
 cd ..

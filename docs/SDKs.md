@@ -5,6 +5,7 @@ DevPulse provides official SDKs for multiple platforms. This guide covers each S
 ## Table of Contents
 
 - [Browser JavaScript SDK](#browser-javascript-sdk)
+- [Node.js SDK](#nodejs-sdk)
 - [Laravel SDK](#laravel-sdk)
 - [WordPress Plugin](#wordpress-plugin)
 - [PHP Core](#php-core)
@@ -26,7 +27,11 @@ npm install @sekolahcode/devpulse-browser
 **Via script tag:**
 
 ```html
-<script src="http://localhost:8000/devpulse.js"></script>
+<script
+  src="https://your-devpulse-host/devpulse.js"
+  data-dsn="https://your-devpulse-host/api/ingest/YOUR_API_KEY"
+  data-env="production"
+></script>
 ```
 
 ### Initialization
@@ -35,7 +40,7 @@ npm install @sekolahcode/devpulse-browser
 import { DevPulse } from "@sekolahcode/devpulse-browser";
 
 DevPulse.init({
-  dsn: "http://localhost:8000/api/ingest/YOUR_API_KEY",
+  dsn: "https://your-devpulse-host/api/ingest/YOUR_API_KEY",
   environment: "production",
   release: "1.0.0",
   enabled: true,
@@ -54,6 +59,9 @@ DevPulse.init({
 | `enabled`          | `true`         | Enable/disable SDK               |
 | `trackVitals`      | `true`         | Auto-track Core Web Vitals       |
 | `tracesSampleRate` | `1.0`          | Sample rate (0.0-1.0)            |
+| `maxBreadcrumbs` | `20` | Maximum breadcrumbs retained per event |
+| `captureQueryStrings` | `false` | Include query strings in XHR/fetch breadcrumb URLs |
+| `beforeSend` | `null` | Hook to inspect, modify, or drop events before sending |
 
 ### API Reference
 
@@ -97,11 +105,100 @@ Call `DevPulse.clearUser()` on logout.
 
 When `trackVitals: true`, the SDK automatically tracks:
 
-- LCP (Largest Contentful Paint)
-- FID (First Input Delay)
-- CLS (Cumulative Layout Shift)
-- FCP (First Contentful Paint)
-- TTFB (Time to First Byte)
+| Metric | Description |
+|---|---|
+| `lcp` | Largest Contentful Paint (ms) |
+| `inp` | Interaction to Next Paint (ms) |
+| `cls` | Cumulative Layout Shift (0–1) |
+| `ttfb` | Time to First Byte (ms) |
+| `page_load` | Total page load time (ms) |
+
+---
+
+## Node.js SDK
+
+Zero-dependency Node.js SDK for server-side error tracking and performance monitoring.
+
+### Installation
+
+```bash
+npm install @sekolahcode/devpulse-node
+```
+
+### Initialization
+
+```javascript
+const { DevPulse } = require('@sekolahcode/devpulse-node');
+
+DevPulse.init({
+  dsn: 'https://your-devpulse-host/api/ingest/YOUR_API_KEY',
+  environment: 'production',
+  release: '1.0.0',
+});
+```
+
+### Configuration Options
+
+| Option | Default | Description |
+|---|---|---|
+| `dsn` | *(required)* | Ingest endpoint URL with API key |
+| `environment` | `"production"` | Environment name |
+| `release` | `null` | Release/version tag |
+| `enabled` | `true` | Enable/disable SDK |
+| `timeout` | `3000` | HTTP timeout in milliseconds |
+| `beforeSend` | `null` | Hook to inspect, modify, or drop events before sending |
+
+### API Reference
+
+#### `DevPulse.captureException(error, extra?)`
+
+```javascript
+try {
+  await riskyOperation();
+} catch (err) {
+  DevPulse.captureException(err, { orderId: 42 });
+}
+```
+
+#### `DevPulse.captureMessage(message, level?, extra?)`
+
+```javascript
+DevPulse.captureMessage('Quota approaching', 'warning', { usage: 0.9 });
+```
+
+Levels: `debug`, `info`, `warning`, `error`, `fatal`
+
+#### `DevPulse.setUser(user)` / `DevPulse.clearUser()`
+
+```javascript
+DevPulse.setUser({ id: '123', email: 'user@example.com' });
+DevPulse.clearUser();
+```
+
+### Express Integration
+
+```javascript
+const { DevPulse, devpulseErrorHandler } = require('@sekolahcode/devpulse-node');
+
+DevPulse.init({ dsn: '...' });
+
+// Register as the last middleware
+app.use(devpulseErrorHandler());
+```
+
+### `beforeSend` Hook
+
+Return `null` or `false` to drop an event:
+
+```javascript
+DevPulse.init({
+  dsn: '...',
+  beforeSend(event) {
+    if (event.user?.email?.endsWith('@internal.example.com')) return null;
+    return event;
+  },
+});
+```
 
 ---
 
@@ -121,7 +218,7 @@ php artisan vendor:publish --tag=devpulse-config
 Add to `.env`:
 
 ```env
-DEVPULSE_DSN=http://localhost:8000/api/ingest/YOUR_API_KEY
+DEVPULSE_DSN=https://your-devpulse-host/api/ingest/YOUR_API_KEY
 DEVPULSE_ENV=production
 DEVPULSE_RELEASE=1.4.2
 ```
@@ -257,7 +354,7 @@ Go to **Settings → DevPulse** and enter your DSN and environment.
 **Option B: wp-config.php Constants**
 
 ```php
-define('DEVPULSE_DSN', 'http://localhost:8000/api/ingest/YOUR_API_KEY');
+define('DEVPULSE_DSN', 'https://your-devpulse-host/api/ingest/YOUR_API_KEY');
 define('DEVPULSE_ENV', 'production');
 define('DEVPULSE_ENABLED', true);
 ```
@@ -288,7 +385,7 @@ composer require devpulse/core
 use DevPulse\Client;
 
 $client = new Client([
-    'dsn' => 'http://localhost:8000/api/ingest/YOUR_API_KEY',
+    'dsn' => 'https://your-devpulse-host/api/ingest/YOUR_API_KEY',
     'environment' => 'production',
     'release' => '1.0.0',
     'enabled' => true,
@@ -319,7 +416,7 @@ $client->captureMessage('Something noteworthy', 'warning');
 use DevPulse\DevPulse;
 
 DevPulse::init([
-    'dsn' => 'http://localhost:8000/api/ingest/YOUR_API_KEY',
+    'dsn' => 'https://your-devpulse-host/api/ingest/YOUR_API_KEY',
 ]);
 
 DevPulse::captureException($e);
