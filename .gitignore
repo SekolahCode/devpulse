@@ -5,3 +5,7 @@
 !.env.example
 **/.env.example
 sdks/dist/
+
+# Kilo Code (local AI tooling config)
+.kilo/
+kilo.json
